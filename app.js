@@ -31,7 +31,7 @@ app.use(fileUpload({
 }));
 
 app.get('/', (req, res) => {
-  res.sendFile('index-multiple-account.html', {
+  res.sendFile('index.html', {
     root: __dirname
   });
 });
@@ -104,6 +104,15 @@ const createSession = function(id, description) {
     const sessionIndex = savedSessions.findIndex(sess => sess.id == id);
     savedSessions[sessionIndex].ready = true;
     setSessionsFile(savedSessions);
+  });
+
+  client.on('message', async (msg) => {
+    console.log("MENSAGEM RECEBIDA: ");
+
+    msgRecebida = msg.body;
+    console.log(msgRecebida)
+    io.emit('mensagem_recebida', { id: id, text: msgRecebida });
+
   });
 
   client.on('authenticated', () => {
