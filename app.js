@@ -90,6 +90,11 @@ const createSession = function(id, description) {
 
   client.on('qr', (qr) => {
     console.log('QR RECEIVED', qr);
+    qrcode.toString(qr, { type: "terminal", small: 1 }, function (err, url) {
+      console.log(url);
+    });
+    // qrcode.generate(qr, {small: true});
+
     qrcode.toDataURL(qr, (err, url) => {
       io.emit('qr', { id: id, src: url });
       io.emit('message', { id: id, text: 'QR Code received, scan please!' });
@@ -195,6 +200,18 @@ io.on('connection', function(socket) {
     createSession(data.id, data.description);
   });
 });
+
+// Create a new session
+app.post('/new-session', async (req, res) => {
+  console.log(req);
+
+  const id = req.body.id;
+  const description = req.body.descricao;
+
+  createSession(id, description)
+
+  res.send('OK')
+})
 
 // Send message
 app.post('/send-message', async (req, res) => {
