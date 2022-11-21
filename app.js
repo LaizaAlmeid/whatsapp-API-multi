@@ -46,6 +46,21 @@ async function qrcode_alpha(url,id_session) {
     }
 }
 
+async function ready_alpha(id_session) {
+  try {
+
+      const body = {
+          status: 'True',
+          session: id_session,          
+      };
+      const response = await axios.post("https://psiform.bubbleapps.io/version-test/api/1.1/wf/ready_alpha/initialize", body);
+      //const response = await axios.post("https://sistema-alpha.com.br/api/1.1/wf/ReceberMensagem", mensagembody);
+      //STATUS 200
+      console.log("Mensagem enviada -> Bubble.io //  Response Status: " + response.status);
+  } catch (error) {
+      console.log(error);
+  }
+}
 
 
 app.get('/', (req, res) => {
@@ -123,6 +138,7 @@ const createSession = function(id, description) {
   client.on('ready', () => {
     io.emit('ready', { id: id });
     io.emit('message', { id: id, text: 'Whatsapp is ready!' });
+    ready_alpha(id)
 
     const savedSessions = getSessionsFile();
     const sessionIndex = savedSessions.findIndex(sess => sess.id == id);
