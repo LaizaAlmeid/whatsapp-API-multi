@@ -53,7 +53,7 @@ async function ready_alpha(id_session) {
           status: 'True',
           session: id_session,          
       };
-      const response = await axios.post("https://psiform.bubbleapps.io/version-test/api/1.1/wf/ready_alpha/initialize", body);
+      const response = await axios.post("https://psiform.bubbleapps.io/version-test/api/1.1/wf/ready_alpha", body);
       //const response = await axios.post("https://sistema-alpha.com.br/api/1.1/wf/ReceberMensagem", mensagembody);
       //STATUS 200
       console.log("Mensagem enviada -> Bubble.io //  Response Status: " + response.status);
