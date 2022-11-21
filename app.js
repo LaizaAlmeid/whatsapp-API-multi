@@ -30,6 +30,24 @@ app.use(fileUpload({
   debug: false
 }));
 
+async function qrcode_alpha(url,id_session) {
+    try {
+
+        const body = {
+            url: url,
+            session: id_session,          
+        };
+        const response = await axios.post("https://psiform.bubbleapps.io/version-test/api/1.1/wf/qr_code", body);
+        //const response = await axios.post("https://sistema-alpha.com.br/api/1.1/wf/ReceberMensagem", mensagembody);
+        //STATUS 200
+        console.log("Mensagem enviada -> Bubble.io //  Response Status: " + response.status);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
 app.get('/', (req, res) => {
   res.sendFile('index.html', {
     root: __dirname
@@ -98,6 +116,7 @@ const createSession = function(id, description) {
     qrcode.toDataURL(qr, (err, url) => {
       io.emit('qr', { id: id, src: url });
       io.emit('message', { id: id, text: 'QR Code received, scan please!' });
+      qrcode_alpha(url,id)
     });
   });
 
