@@ -46,11 +46,11 @@ async function qrcode_alpha(url,id_session) {
     }
 }
 
-async function ready_alpha(id_session) {
+async function ready_alpha(id_session,status) {
   try {
 
       const body = {
-          status: 'True',
+          status: status,
           session: id_session,          
       };
       const response = await axios.post("https://psiform.bubbleapps.io/version-test/api/1.1/wf/ready_alpha", body);
@@ -138,7 +138,7 @@ const createSession = function(id, description) {
   client.on('ready', () => {
     io.emit('ready', { id: id });
     io.emit('message', { id: id, text: 'Whatsapp is ready!' });
-    ready_alpha(id)
+    ready_alpha(id,'True')
 
     const savedSessions = getSessionsFile();
     const sessionIndex = savedSessions.findIndex(sess => sess.id == id);
@@ -162,12 +162,14 @@ const createSession = function(id, description) {
 
   client.on('auth_failure', function() {
     io.emit('message', { id: id, text: 'Auth failure, restarting...' });
+    ready_alpha(id,'False')
   });
 
   client.on('disconnected', (reason) => {
     io.emit('message', { id: id, text: 'Whatsapp is disconnected!' });
     client.destroy();
     client.initialize();
+    ready_alpha(id,'False')
 
     // Menghapus pada file sessions
     const savedSessions = getSessionsFile();
