@@ -229,7 +229,7 @@ app.post('/new-session', async (req, res) => {
 
   createSession(id, description)
 
-  res.send('OK')
+  res.json('ok')
 })
 
 // Send message
