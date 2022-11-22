@@ -250,6 +250,29 @@ app.post('/new-session', async (req, res) => {
   res.json('ok')
 })
 
+// Verify the session
+app.post('/verify', async (req, res) => {
+  console.log(req);
+
+  const sender = req.body.id;
+  
+  const client = sessions.find(sess => sess.id == sender)?.client;
+
+  // Make sure the sender is exists & ready
+  if (!client) {
+    return res.status(422).json({
+      status: false,
+      message: `The sender: ${sender} is not found!`
+    })
+  }
+  
+  res.json({
+    status: true,
+    message: `Sessão encontrada!`
+  })
+
+})
+
 // Send message
 app.post('/send-message', async (req, res) => {
   console.log(req);
