@@ -138,7 +138,7 @@ const createSession = function(id, description) {
   client.on('ready', () => {
     io.emit('ready', { id: id });
     io.emit('message', { id: id, text: 'Whatsapp is ready!' });
-    ready_alpha(id,'True')
+    ready_alpha(id,true)
 
     const savedSessions = getSessionsFile();
     const sessionIndex = savedSessions.findIndex(sess => sess.id == id);
@@ -162,14 +162,14 @@ const createSession = function(id, description) {
 
   client.on('auth_failure', function() {
     io.emit('message', { id: id, text: 'Auth failure, restarting...' });
-    ready_alpha(id,'False')
+    ready_alpha(id,false)
   });
 
   client.on('disconnected', (reason) => {
     io.emit('message', { id: id, text: 'Whatsapp is disconnected!' });
     client.destroy();
     client.initialize();
-    ready_alpha(id,'False')
+    ready_alpha(id,false)
 
     // Menghapus pada file sessions
     const savedSessions = getSessionsFile();
