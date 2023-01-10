@@ -151,9 +151,9 @@ const createSession = function(id, description) {
 
     msgRecebida = msg.body;
     conversa = msg.from;
-    console.log(msg)
-    console.log(msg.from)
-    console.log(msgRecebida)
+    // console.log(msg)
+    // console.log(msg.from)
+    // console.log(msgRecebida)
     io.emit('mensagem_recebida', { id: id, text: msgRecebida, remetente: conversa });
 
   });
