@@ -177,7 +177,9 @@
 			});
 
 			socket.on('mensagem_recebida', function(data) {
-				$(`.client.client-${data.id} .logs`).prepend($('<li>').text(data.text));
+				// $(`.client.client-${data.id} .logs`).prepend($('<li>').text(data.remetente +"MENSAGEM: "+ data.text));
+				console.log(data)
+				// $(`.client.client-${data.id} .logs`).prepend($('<li>').text(data.remetente));
 			});
 
 			socket.on('authenticated', function(data) {
