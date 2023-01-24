@@ -243,7 +243,7 @@ io.on('connection', function(socket) {
 
 // Create a new session
 app.post('/new-session', async (req, res) => {
-  console.log(req);
+  // console.log(req);
 
   const id = req.body.id;
   const description = req.body.descricao;
@@ -255,7 +255,7 @@ app.post('/new-session', async (req, res) => {
 
 // Verify the session
 app.post('/verify', async (req, res) => {
-  console.log(req);
+  // console.log(req);
 
   const sender = req.body.id;
   const client = sessions.find(sess => sess.id == sender)?.client;
@@ -277,7 +277,7 @@ app.post('/verify', async (req, res) => {
 
 // Send message
 app.post('/send-message', async (req, res) => {
-  console.log(req);
+  // console.log(req);
 
   const sender = req.body.sender;
   const number = phoneNumberFormatter(req.body.number);
