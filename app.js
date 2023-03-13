@@ -40,7 +40,7 @@ async function qrcode_alpha(url,id_session) {
         const response = await axios.post("https://psiway.com.br/version-test/api/1.1/wf/qr_code", body);
         //const response = await axios.post("https://sistema-alpha.com.br/api/1.1/wf/ReceberMensagem", mensagembody);
         //STATUS 200
-        console.log("Mensagem enviada QRCODE"+ id_session +"-> Bubble.io //  Response Status: " + response.status);
+        console.log("Mensagem enviada QRCODE "+ id_session +"-> Bubble.io //  Response Status: " + response.status);
     } catch (error) {
         console.log(error);
     }
@@ -56,7 +56,7 @@ async function ready_alpha(id_session,status) {
       const response = await axios.post("https://psiway.com.br/version-test/api/1.1/wf/ready_alpha", body);
       //const response = await axios.post("https://sistema-alpha.com.br/api/1.1/wf/ReceberMensagem", mensagembody);
       //STATUS 200
-      console.log("Mensagem enviada READY"+ id_session + status +"-> Bubble.io //  Response Status: " + response.status);
+      console.log("Mensagem enviada READY "+ id_session + status +"-> Bubble.io //  Response Status: " + response.status);
   } catch (error) {
       console.log(error);
   }
