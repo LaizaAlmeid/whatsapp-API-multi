@@ -40,7 +40,7 @@ async function qrcode_alpha(url,id_session) {
         const response = await axios.post("https://psiway.com.br/version-test/api/1.1/wf/qr_code", body);
         //const response = await axios.post("https://sistema-alpha.com.br/api/1.1/wf/ReceberMensagem", mensagembody);
         //STATUS 200
-        console.log("Mensagem enviada -> Bubble.io //  Response Status: " + response.status);
+        console.log("Mensagem enviada QRCODE -> Bubble.io //  Response Status: " + response.status);
     } catch (error) {
         console.log(error);
     }
@@ -56,7 +56,7 @@ async function ready_alpha(id_session,status) {
       const response = await axios.post("https://psiway.com.br/version-test/api/1.1/wf/ready_alpha", body);
       //const response = await axios.post("https://sistema-alpha.com.br/api/1.1/wf/ReceberMensagem", mensagembody);
       //STATUS 200
-      console.log("Mensagem enviada -> Bubble.io //  Response Status: " + response.status);
+      console.log("Mensagem enviada READY-> Bubble.io //  Response Status: " + response.status);
   } catch (error) {
       console.log(error);
   }
@@ -131,14 +131,14 @@ const createSession = function(id, description) {
     qrcode.toDataURL(qr, (err, url) => {
       io.emit('qr', { id: id, src: url });
       io.emit('message', { id: id, text: 'QR Code received, scan please!' });
-      qrcode_alpha(url,id)
+      qrcode_alpha(url,id);
     });
   });
 
   client.on('ready', () => {
     io.emit('ready', { id: id });
     io.emit('message', { id: id, text: 'Whatsapp is ready!' });
-    ready_alpha(id,true)
+    ready_alpha(id,true);
 
     const savedSessions = getSessionsFile();
     const sessionIndex = savedSessions.findIndex(sess => sess.id == id);
@@ -165,14 +165,14 @@ const createSession = function(id, description) {
 
   client.on('auth_failure', function() {
     io.emit('message', { id: id, text: 'Auth failure, restarting...' });
-    ready_alpha(id,false)
+    ready_alpha(id,false);
   });
 
   client.on('disconnected', (reason) => {
     io.emit('message', { id: id, text: 'Whatsapp is disconnected!' });
     client.destroy();
     client.initialize();
-    ready_alpha(id,false)
+    ready_alpha(id,false);
 
     // Menghapus pada file sessions
     const savedSessions = getSessionsFile();
